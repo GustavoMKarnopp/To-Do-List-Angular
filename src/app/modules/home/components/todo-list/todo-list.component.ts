@@ -11,13 +11,13 @@ import { TaskList } from '../../model/task-list';
 export class TodoListComponent implements DoCheck{
 
   //TODO: ARRAY QUE RECEBE OS VALORES.
-  public taskList: Array<TaskList> = [];
+  public taskList: Array<TaskList> = JSON.parse(localStorage.getItem("list") || '[]');
 
   constructor(){}
 
   //TODO: TODA A VEZ QUE OCORRER UMA MUDANÇA EM MEU COMPONENTE ESSE LIFE CIRCLE HOOK IRÁ CHAMAR E INFORMAR.
   ngDoCheck(): void {
-    this.taskList.sort((first, last) => Number(first.checked) - Number(last.checked)); //TODO: ADICIONA O ITEM QUE ESTIVER CHECKADO NA ULTIMA POSIÇÃO DO ARRAY.
+    this.setLocalStorage()
   }
 
   //TODO: SETA OS VALORES DENTRO DO ARRAY ENTIANDO E TIPANDO.
@@ -42,6 +42,13 @@ export class TodoListComponent implements DoCheck{
       if(confirm){
         this.deleteItemTaskList(index);
       }
+    }
+  }
+
+  public setLocalStorage(){
+    if(this.taskList){
+      this.taskList.sort((first, last) => Number(first.checked) - Number(last.checked)); //TODO: ADICIONA O ITEM QUE ESTIVER CHECKADO NA ULTIMA POSIÇÃO DO ARRAY.
+      localStorage.setItem("list", JSON.stringify(this.taskList))
     }
   }
 
