@@ -2,16 +2,17 @@
   <ul *ngIf="taskList.length">
     <li *ngFor="let item of taskList; let i = index">
       <input type="checkbox" [(ngModel)]="item.checked">
-      <input type="text" [(ngModel)]="item.task ">
+      <input type="text" (keyup)="validationInput(item.task, i)" [(ngModel)]="item.task" [ngClass]="{'checked': item.checked}">
 
       <button (click)="deleteItemTaskList(i)">X</button>
-
-      <!-- {{item | json}} -->
     </li>
   </ul>
   <div >
 
   </div>
 </section>
-<app-todo-input-add-itens></app-todo-input-add-itens>
+
+<!-- RECEBE OS VALORES DO EMITTER PELO NOME DA VARIÁVEL emmitItemTaskList E SETA PELA FUNÇÃO setEmitTaskList DENTRO DA LISTA -->
+<app-todo-input-add-itens (emmitItemTaskList)="setEmitTaskList($event)"></app-todo-input-add-itens>
+
 <app-todo-buton-delete-all *ngIf="taskList.length" (click)="deleteAllTaskList()"></app-todo-buton-delete-all>
