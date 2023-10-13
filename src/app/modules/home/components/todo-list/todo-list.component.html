@@ -1,18 +1,17 @@
 <section>
-  <ul>
-    <li>
-      <input type="checkbox">
-      <input type="text">
+  <ul *ngIf="taskList.length">
+    <li *ngFor="let item of taskList; let i = index">
+      <input type="checkbox" [(ngModel)]="item.checked">
+      <input type="text" [(ngModel)]="item.task ">
 
-      <button>X</button>
-    </li>
-    <li>
-      <input type="checkbox">
-      <input type="text" class="checked">
+      <button (click)="deleteItemTaskList(i)">X</button>
 
-      <button>X</button>
+      <!-- {{item | json}} -->
     </li>
   </ul>
+  <div >
+
+  </div>
 </section>
 <app-todo-input-add-itens></app-todo-input-add-itens>
-<app-todo-buton-delete-all></app-todo-buton-delete-all>
+<app-todo-buton-delete-all *ngIf="taskList.length" (click)="deleteAllTaskList()"></app-todo-buton-delete-all>
